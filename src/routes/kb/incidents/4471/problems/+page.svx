@@ -58,8 +58,8 @@ observation.
   from the reporter's browser.
 - The export repeats some reports across overlapping pages; each id counts once (`uniqueById`).
 - The one-day reports are `oneDayMove` in `src/lib/data/desk-notes.json`. They stay under the cause
-  `causeOf` files them by, and `readAs` counts them for the footnote, so the counts match the desk's cause
-  table on [#4471](/kb/incidents/4471).
+  `causeOf` files them by, and the footnote names that cause, so the counts match the desk's cause table on
+  [#4471](/kb/incidents/4471).
 - Each ticket lists the ids of the reports it covers.
 
 <RenderStamp {signature} />
