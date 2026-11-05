@@ -1,0 +1,56 @@
+---
+layout: runbook
+title: '#4471 · the problems inside the merged ticket'
+owner: support desk
+status: open
+reviewed: 2026-11-05
+signature: 'v1.eyJzdWIiOiIxNDkyIiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTM4NTA1NDQsImV4cCI6MTc5MzkzNjk0NH0.VHGJHY8oKCW2v3BfACCz1SANum8IR_gQlD7hga-85y8'
+---
+
+<script>
+  import ProblemTable from '#lib/kb/ProblemTable.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+
+  const repo = 'https://github.com/pavani06/s01e03-run2/issues';
+  const tickets = { parser: `${repo}/1`, hint: `${repo}/2`, 'one-day': `${repo}/3` };
+</script>
+
+[#4471](/kb/incidents/4471) merged every date report into one issue, because the desk merges on the
+subject line ([decision 0001](/kb/decisions/0001-dedupe-by-subject)). Read by cause, the reports hold
+more than one problem. Each one below has its own ticket, with the reports it covers.
+
+## The problems
+
+<ProblemTable ticket={4471} {tickets} />
+
+<Callout kind="warn">
+Counts come from the desk's own rule in <code>src/lib/kb/causes.ts</code> and its notes in
+<code>src/lib/data/desk-notes.json</code>, over the export of 4 October, built when the page renders.
+</Callout>
+
+### parser
+
+The shared parser reads every date month first, and every tenant on file writes the day first. A booking
+for 7 April comes out as 4 July. This is the bug #4471 was opened for.
+
+### hint
+
+A different bug with no ticket of its own. Tenants on the booking-v3 form show `MM/DD/YYYY` under the
+date field, so their people type the month first, and the form reads the date the tenant's way, day
+first. Fixing the parser does not fix these: the hint is wrong, not the parser.
+
+### one-day move
+
+Some reports are not a day and month swap at all: the date lands one day off, as in "Client in Lisbon got
+Tuesday. Client in Toronto got Monday." The desk read them as a one-day move and still files them under
+the parser by tenant, so they are counted there too. The parser fix will not move them back a day.
+
+## How to check
+
+- The cause of a report is `causeOf` in `src/lib/kb/causes.ts`, never the intake tag, which guesses
+  from the reporter's browser.
+- The export repeats some reports across overlapping pages; each id counts once (`uniqueById`).
+- Each ticket lists the ids of the reports it covers.
+
+<RenderStamp {signature} />
