@@ -39,7 +39,8 @@ for 7 April comes out as 4 July. This is the bug #4471 was opened for.
 Tenants on the booking-v3 form show `MM/DD/YYYY` under the date field, so their people type the month
 first, and the form reads the date the tenant's way, day first. Only reports sent through that form count
 here. The desk's cause table marks this cause "not this ticket — no ticket of its own": #4471 was opened
-for the parser. Fixing the parser does not fix these: the hint is wrong, not the parser.
+for the parser. Fixing the parser does not fix these: the form already reads the tenant's order, and the
+hint still asks for the month first.
 
 ### The one-day reports: an observation
 
@@ -56,8 +57,9 @@ observation.
 - The cause of a report is `causeOf` in `src/lib/kb/causes.ts`, never the intake tag, which guesses
   from the reporter's browser.
 - The export repeats some reports across overlapping pages; each id counts once (`uniqueById`).
-- The one-day reports are `oneDayMove` in `src/lib/data/desk-notes.json`. They stay under the cause the
-  desk files them by (`readAs`), so the counts match the desk's cause table on [#4471](/kb/incidents/4471).
+- The one-day reports are `oneDayMove` in `src/lib/data/desk-notes.json`. They stay under the cause
+  `causeOf` files them by, and `readAs` counts them for the footnote, so the counts match the desk's cause
+  table on [#4471](/kb/incidents/4471).
 - Each ticket lists the ids of the reports it covers.
 
 <RenderStamp {signature} />

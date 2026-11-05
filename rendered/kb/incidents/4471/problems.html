@@ -3,19 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="../../../_app/immutable/entry/start.jTBWyBR4.js" rel="modulepreload">
+    <link href="../../../_app/immutable/entry/start.Bhw-N_t8.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/WgfOfNfE.js" rel="modulepreload">
-		<link href="../../../_app/immutable/chunks/C_BLtLw0.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/BmXL9wd7.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/CZomEjWq.js" rel="modulepreload">
-		<link href="../../../_app/immutable/entry/app.Czbl-pPQ.js" rel="modulepreload">
+		<link href="../../../_app/immutable/entry/app.CRALEsuv.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/DZni_WYU.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/BMv-2JeR.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/DQhTBKxc.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/DL3LuOT-.js" rel="modulepreload">
 		<link href="../../../_app/immutable/nodes/0.Dqsao82p.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/BRmqMdvF.js" rel="modulepreload">
-		<link href="../../../_app/immutable/nodes/5.CdqKGiBU.js" rel="modulepreload">
-		<link href="../../../_app/immutable/chunks/BRkeMq4k.js" rel="modulepreload">
+		<link href="../../../_app/immutable/nodes/5.BhlgomD7.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/KSuTKa0h.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/CCdwa9zY.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/DZqXfhuf.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/iXLSwIXB.js" rel="modulepreload">
@@ -37,27 +37,28 @@ more than one problem. Each one below has its own ticket, with the reports it co
 for 7 April comes out as 4 July. This is the bug #4471 was opened for.</p> <h3>hint: the booking-v3 date-field hint</h3> <p>Tenants on the booking-v3 form show <code>MM/DD/YYYY</code> under the date field, so their people type the month
 first, and the form reads the date the tenant’s way, day first. Only reports sent through that form count
 here. The desk’s cause table marks this cause “not this ticket — no ticket of its own”: #4471 was opened
-for the parser. Fixing the parser does not fix these: the hint is wrong, not the parser.</p> <h3>The one-day reports: an observation</h3> <p>The desk’s notes list some reports as a one-day move. Its cause table files them under <code>parser</code> by tenant
+for the parser. Fixing the parser does not fix these: the form already reads the tenant’s order, and the
+hint still asks for the month first.</p> <h3>The one-day reports: an observation</h3> <p>The desk’s notes list some reports as a one-day move. Its cause table files them under <code>parser</code> by tenant
 and footnotes them, and so does the table above: they stay inside the <code>parser</code> count. That filing comes
 from the tenant and the channel, not from what the reports say. Most describe a date one day off, or one
 that differs by where the reader is, as in “Client in Lisbon got Tuesday. Client in Toronto got Monday.”;
 none of their bodies describes a day and month swap. Nothing in the export says what causes them, and a time zone or day
 boundary is only a guess. <a href="https://github.com/pavani06/s01e03-run2/issues/3" rel="nofollow">#3</a> records them as an
 observation.</p> <h2>How to check</h2> <ul><li>The cause of a report is <code>causeOf</code> in <code>src/lib/kb/causes.ts</code>, never the intake tag, which guesses
-from the reporter’s browser.</li> <li>The export repeats some reports across overlapping pages; each id counts once (<code>uniqueById</code>).</li> <li>The one-day reports are <code>oneDayMove</code> in <code>src/lib/data/desk-notes.json</code>. They stay under the cause the
-desk files them by (<code>readAs</code>), so the counts match the desk’s cause table on <a href="/kb/incidents/4471">#4471</a>.</li> <li>Each ticket lists the ids of the reports it covers.</li></ul> <!--[0--><p class="stamp svelte-1280m42">desk ref <b class="svelte-1280m42">DR-GP75-T39H</b></p><!--]--><!----><!----></main> <footer class="svelte-e2jw2j">Pages are written by people. Tables and charts are built from data at render time.</footer></div><!--]--><!----><!--]--><!--]--> <!--[-1--><!--]--><!--]-->
+from the reporter’s browser.</li> <li>The export repeats some reports across overlapping pages; each id counts once (<code>uniqueById</code>).</li> <li>The one-day reports are <code>oneDayMove</code> in <code>src/lib/data/desk-notes.json</code>. They stay under the cause <code>causeOf</code> files them by, and <code>readAs</code> counts them for the footnote, so the counts match the desk’s cause
+table on <a href="/kb/incidents/4471">#4471</a>.</li> <li>Each ticket lists the ids of the reports it covers.</li></ul> <!--[0--><p class="stamp svelte-1280m42">desk ref <b class="svelte-1280m42">DR-GP75-T39H</b></p><!--]--><!----><!----></main> <footer class="svelte-e2jw2j">Pages are written by people. Tables and charts are built from data at render time.</footer></div><!--]--><!----><!--]--><!--]--> <!--[-1--><!--]--><!--]-->
 			
 			<script>
 				{
-					__sveltekit_1h3llg5 = {
+					__sveltekit_s3abh3 = {
 						base: new URL("../../..", location).pathname.slice(0, -1)
 					};
 
 					const element = document.currentScript.parentElement;
 
 					Promise.all([
-						import("../../../_app/immutable/entry/start.jTBWyBR4.js"),
-						import("../../../_app/immutable/entry/app.Czbl-pPQ.js")
+						import("../../../_app/immutable/entry/start.Bhw-N_t8.js"),
+						import("../../../_app/immutable/entry/app.CRALEsuv.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element, {
 							node_ids: [0, 5],
