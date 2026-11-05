@@ -5,6 +5,7 @@
   let { ticket, tickets = {} }: { ticket: number; tickets?: Record<string, string> } = $props();
 
   const view = $derived(problemsIn(ticket));
+  const label = (id: string) => (id === 'one-day' ? 'one-day shift' : id);
 </script>
 
 <p class="sum">
@@ -19,7 +20,7 @@
   <tbody>
     {#each view.problems as p (p.id)}
       <tr>
-        <td><code>{p.id}</code></td>
+        <td><code>{label(p.id)}</code></td>
         <td>{p.reports.length}</td>
         <td>{p.tenants}</td>
         <td>{p.firstSeen} → {p.lastSeen}</td>
@@ -30,8 +31,8 @@
 </table>
 
 <p class="note">
-  {view.oneDay} reports read as a one-day move are inside the <code>{view.oneDayUnder.join(', ')}</code> count,
-  where the desk files them by tenant.
+  The desk's cause table counts the {view.problems.find((p) => p.id === 'one-day')?.reports.length} one-day reports inside
+  <code>{view.oneDayUnder.join(', ')}</code> by tenant; the parser fix does not change them.
 </p>
 
 <style>

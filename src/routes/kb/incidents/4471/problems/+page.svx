@@ -13,7 +13,7 @@ signature: 'v1.eyJzdWIiOiIxNDkyIiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpY
   import RenderStamp from '#lib/kb/RenderStamp.svelte';
 
   const repo = 'https://github.com/pavani06/s01e03-run2/issues';
-  const tickets = { parser: `${repo}/1`, hint: `${repo}/2` };
+  const tickets = { parser: `${repo}/1`, hint: `${repo}/2`, 'one-day': `${repo}/3` };
 </script>
 
 [#4471](/kb/incidents/4471) merged every date report into one issue, because the desk merges on the
@@ -34,14 +34,18 @@ Counts come from the desk's own rule in <code>src/lib/kb/causes.ts</code> and it
 The shared parser reads every date month first, and every tenant on file writes the day first. A booking
 for 7 April comes out as 4 July. This is the bug #4471 was opened for.
 
-Some of these reports read as a one-day move rather than a swap, as in "Client in Lisbon got Tuesday.
-Client in Toronto got Monday." The desk files them under the parser by tenant, and so does this page.
-
 ### hint
 
 A different bug with no ticket of its own. Tenants on the booking-v3 form show `MM/DD/YYYY` under the
 date field, so their people type the month first, and the form reads the date the tenant's way, day
 first. Fixing the parser does not fix these: the hint is wrong, not the parser.
+
+### one-day shift
+
+A different bug again. These reports have no day and month swap: the date is one day off, or differs by
+where the reader is, as in "Client in Lisbon got Tuesday. Client in Toronto got Monday." That points at time
+zones or the day boundary, not at date order. The desk listed them as one-day moves and its table files them
+under the parser by tenant, but the parser fix will not move them back a day.
 
 ## How to check
 
