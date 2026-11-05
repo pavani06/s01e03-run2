@@ -24,11 +24,13 @@ export function problemsIn(ticket: number) {
   const owner = ticketCause(groups, ticket);
   const byCause = (cause: 'parser' | 'hint') => groups.find((g) => g.cause === cause)?.reports ?? [];
   const oneDay = merged.filter((r) => notes.oneDayMove.includes(r.id));
+  // A report counts once, under the problem it shows: the one-day reports leave parser for their own row.
+  const parserOnly = byCause('parser').filter((r) => !notes.oneDayMove.includes(r.id));
   const problems: Problem[] = [
-    { id: 'parser', reports: byCause('parser'), ...span(byCause('parser')) },
+    { id: 'parser', reports: parserOnly, ...span(parserOnly) },
     { id: 'hint', reports: byCause('hint'), ...span(byCause('hint')) },
     { id: 'one-day', reports: oneDay, ...span(oneDay) },
   ];
   const oneDayUnder = groups.filter((g) => readAs(g, notes.oneDayMove) > 0).map((g) => g.cause);
-  return { merged: merged.length, owner, problems, oneDayUnder };
+  return { merged: merged.length, owner, problems, oneDayUnder, deskParser: byCause('parser').length };
 }

@@ -31,8 +31,8 @@
 </table>
 
 <p class="note">
-  The desk's cause table counts the {view.problems.find((p) => p.id === 'one-day')?.reports.length} one-day reports inside
-  <code>{view.oneDayUnder.join(', ')}</code> by tenant; the parser fix does not change them.
+  Each report counts once, under the problem it shows. The desk's cause table counts {view.deskParser} under
+  <code>{view.oneDayUnder.join(', ')}</code>, because it files the one-day reports there by tenant.
 </p>
 
 <style>

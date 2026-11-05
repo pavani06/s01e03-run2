@@ -45,7 +45,8 @@ first. Fixing the parser does not fix these: the hint is wrong, not the parser.
 A different bug again. These reports have no day and month swap: the date is one day off, or differs by
 where the reader is, as in "Client in Lisbon got Tuesday. Client in Toronto got Monday." That points at time
 zones or the day boundary, not at date order. The desk listed them as one-day moves and its table files them
-under the parser by tenant, but the parser fix will not move them back a day.
+under the parser by tenant; here they count once, in their own row, because the parser fix will not move them
+back a day.
 
 ## How to check
 
