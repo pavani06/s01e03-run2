@@ -6,7 +6,7 @@ import { groupByCause, readAs, ticketCause, uniqueById, type Report } from '#lib
 import { tenantOf } from '#lib/kb/locales';
 
 export type Problem = {
-  id: 'parser' | 'hint' | 'one-day';
+  id: 'parser' | 'hint';
   reports: Report[];
   tenants: number;
   firstSeen: string;
@@ -27,8 +27,7 @@ export function problemsIn(ticket: number) {
   const problems: Problem[] = [
     { id: 'parser', reports: byCause('parser'), ...span(byCause('parser')) },
     { id: 'hint', reports: byCause('hint'), ...span(byCause('hint')) },
-    { id: 'one-day', reports: oneDay, ...span(oneDay) },
   ];
   const oneDayUnder = groups.filter((g) => readAs(g, notes.oneDayMove) > 0).map((g) => g.cause);
-  return { merged: merged.length, owner, problems, oneDayUnder };
+  return { merged: merged.length, owner, problems, oneDay: oneDay.length, oneDayUnder };
 }

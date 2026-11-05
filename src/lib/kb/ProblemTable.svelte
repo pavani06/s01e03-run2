@@ -5,7 +5,6 @@
   let { ticket, tickets = {} }: { ticket: number; tickets?: Record<string, string> } = $props();
 
   const view = $derived(problemsIn(ticket));
-  const label = (id: string) => (id === 'one-day' ? 'one-day move' : id);
 </script>
 
 <p class="sum">
@@ -20,7 +19,7 @@
   <tbody>
     {#each view.problems as p (p.id)}
       <tr>
-        <td><code>{label(p.id)}</code></td>
+        <td><code>{p.id}</code></td>
         <td>{p.reports.length}</td>
         <td>{p.tenants}</td>
         <td>{p.firstSeen} → {p.lastSeen}</td>
@@ -31,8 +30,8 @@
 </table>
 
 <p class="note">
-  The {view.problems.find((p) => p.id === 'one-day')?.reports.length} one-day reports are also inside the
-  <code>{view.oneDayUnder.join(', ')}</code> count, where the desk files them by tenant.
+  {view.oneDay} reports read as a one-day move are inside the <code>{view.oneDayUnder.join(', ')}</code> count,
+  where the desk files them by tenant.
 </p>
 
 <style>
