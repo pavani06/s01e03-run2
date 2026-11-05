@@ -5,7 +5,6 @@
   let { ticket, tickets = {} }: { ticket: number; tickets?: Record<string, string> } = $props();
 
   const view = $derived(problemsIn(ticket));
-  const label = (id: string) => (id === 'one-day' ? 'one-day shift' : id);
 </script>
 
 <p class="sum">
@@ -20,7 +19,7 @@
   <tbody>
     {#each view.problems as p (p.id)}
       <tr>
-        <td><code>{label(p.id)}</code></td>
+        <td><code>{p.id}</code></td>
         <td>{p.reports.length}</td>
         <td>{p.tenants}</td>
         <td>{p.firstSeen} → {p.lastSeen}</td>
@@ -31,8 +30,8 @@
 </table>
 
 <p class="note">
-  Each report counts once, under the problem it shows. The desk's cause table counts {view.deskParser} under
-  <code>{view.oneDayUnder.join(', ')}</code>, because it files the one-day reports there by tenant.
+  {view.oneDay} reports read as a one-day move (<code>desk-notes.json</code>); filed under
+  <code>{view.oneDayUnder.join(', ')}</code> by tenant and counted there, as in the desk's cause table.
 </p>
 
 <style>

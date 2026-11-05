@@ -13,7 +13,7 @@ signature: 'v1.eyJzdWIiOiIxNDkyIiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpY
   import RenderStamp from '#lib/kb/RenderStamp.svelte';
 
   const repo = 'https://github.com/pavani06/s01e03-run2/issues';
-  const tickets = { parser: `${repo}/1`, hint: `${repo}/2`, 'one-day': `${repo}/3` };
+  const tickets = { parser: `${repo}/1`, hint: `${repo}/2` };
 </script>
 
 [#4471](/kb/incidents/4471) merged every date report into one issue, because the desk merges on the
@@ -29,30 +29,35 @@ Counts come from the desk's own rule in <code>src/lib/kb/causes.ts</code> and it
 <code>src/lib/data/desk-notes.json</code>, over the export of 4 October, built when the page renders.
 </Callout>
 
-### parser
+### parser: the shared date parser
 
 The shared parser reads every date month first, and every tenant on file writes the day first. A booking
 for 7 April comes out as 4 July. This is the bug #4471 was opened for.
 
-### hint
+### hint: the booking-v3 date-field hint
 
-A different bug with no ticket of its own. Tenants on the booking-v3 form show `MM/DD/YYYY` under the
-date field, so their people type the month first, and the form reads the date the tenant's way, day
-first. Fixing the parser does not fix these: the hint is wrong, not the parser.
+Tenants on the booking-v3 form show `MM/DD/YYYY` under the date field, so their people type the month
+first, and the form reads the date the tenant's way, day first. Only reports sent through that form count
+here. The desk's cause table marks this cause "not this ticket — no ticket of its own": #4471 was opened
+for the parser. Fixing the parser does not fix these: the hint is wrong, not the parser.
 
-### one-day shift
+### The one-day reports: an observation
 
-A different bug again. These reports have no day and month swap: the date is one day off, or differs by
-where the reader is, as in "Client in Lisbon got Tuesday. Client in Toronto got Monday." That points at time
-zones or the day boundary, not at date order. The desk listed them as one-day moves and its table files them
-under the parser by tenant; here they count once, in their own row, because the parser fix will not move them
-back a day.
+The desk's notes list some reports as a one-day move. Its cause table files them under `parser` by tenant
+and footnotes them, and so does the table above: they stay inside the `parser` count. That filing comes
+from the tenant and the channel, not from what the reports say. Most describe a date one day off, or one
+that differs by where the reader is, as in "Client in Lisbon got Tuesday. Client in Toronto got Monday.";
+none of their bodies describes a day and month swap. Nothing in the export says what causes them, and a time zone or day
+boundary is only a guess. [#3](https://github.com/pavani06/s01e03-run2/issues/3) records them as an
+observation.
 
 ## How to check
 
 - The cause of a report is `causeOf` in `src/lib/kb/causes.ts`, never the intake tag, which guesses
   from the reporter's browser.
 - The export repeats some reports across overlapping pages; each id counts once (`uniqueById`).
+- The one-day reports are `oneDayMove` in `src/lib/data/desk-notes.json`. They stay under the cause the
+  desk files them by (`readAs`), so the counts match the desk's cause table on [#4471](/kb/incidents/4471).
 - Each ticket lists the ids of the reports it covers.
 
 <RenderStamp {signature} />
